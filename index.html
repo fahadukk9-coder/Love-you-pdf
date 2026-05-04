@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF Page Numbering Tool</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app">
+    <header>
+      <h1>PDF Page Numbering Tool</h1>
+      <p>Upload PDF, select numbering style, drag position, generate and download.</p>
+    </header>
+
+    <main class="layout">
+      <section class="panel">
+        <h2>Settings</h2>
+
+        <label class="field">
+          <span>Upload PDF</span>
+          <input type="file" id="pdfFile" accept="application/pdf" />
+        </label>
+
+        <div class="info-box">
+          <p>Total Pages: <b id="totalPages">0</b></p>
+          <p>Current Page: <b id="currentPageText">0</b></p>
+        </div>
+
+        <label class="field">
+          <span>Number Format</span>
+          <select id="formatPreset">
+            <option value="Page no {page} to {total}">Page no 01 to 100</option>
+            <option value="Pg {page} to {total}">Pg 01 to 100</option>
+            <option value="{page}">01, 02, 03</option>
+            <option value="Page {page} of {total}">Page 01 of 100</option>
+            <option value="Pg {page} / {total}">Pg 01 / 100</option>
+            <option value="custom">Custom Format</option>
+          </select>
+        </label>
+
+        <label class="field hidden" id="customFormatBox">
+          <span>Custom Format</span>
+          <input type="text" id="customFormat" value="Page no {page} to {total}" />
+          <small>Use: {page} and {total}</small>
+        </label>
+
+        <label class="field">
+          <span>Number Padding</span>
+          <select id="padding">
+            <option value="1">1, 2, 3</option>
+            <option value="2" selected>01, 02, 03</option>
+            <option value="3">001, 002, 003</option>
+          </select>
+        </label>
+
+        <div class="two">
+          <label class="field">
+            <span>Header/Footer</span>
+            <select id="verticalPos">
+              <option value="header">Header</option>
+              <option value="footer" selected>Footer</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Align</span>
+            <select id="alignPos">
+              <option value="left">Left</option>
+              <option value="center" selected>Center</option>
+              <option value="right">Right</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Font Size</span>
+          <input type="range" id="fontSize" min="8" max="50" value="16" />
+          <b id="fontSizeText">16px</b>
+        </label>
+
+        <label class="field">
+          <span>Text Color</span>
+          <input type="color" id="textColor" value="#000000" />
+        </label>
+
+        <label class="check">
+          <input type="checkbox" id="applyAll" checked />
+          <span>Apply position to all pages</span>
+        </label>
+
+        <button id="resetPosition" class="btn secondary">Reset Position</button>
+        <button id="generatePdf" class="btn">Generate & Download PDF</button>
+
+        <div class="note">
+          <b>Privacy:</b> PDF browser me process hoti hai. Server par upload nahi hoti.
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <div class="toolbar">
+          <button id="prevPage" class="btn small">Previous</button>
+          <span id="pageCounter">Page 0 of 0</span>
+          <button id="nextPage" class="btn small">Next</button>
+        </div>
+
+        <div class="preview-outer">
+          <div id="pdfPreview" class="pdf-preview">
+            <canvas id="pdfCanvas"></canvas>
+            <div id="numberBox" class="number-box">Page no 01 to 100</div>
+          </div>
+        </div>
+
+        <p class="help">
+          Page number box ko mouse se drag karo. Size change karne ke liye Font Size use karo.
+          Agar "Apply to all pages" off hai to position sirf current page ke liye save hogi.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <!-- PDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <!-- PDF-LIB -->
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+  <script src="app.js"></script>
+</body>
+</html>
